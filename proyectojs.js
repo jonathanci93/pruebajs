@@ -9,8 +9,8 @@ let pantalon = 8000;
 let camisa = 9500;
 let zapatillas = 24000;
 
-function calcularIVA(precio) {
-    let precioConIva = precio * 0.21;
+function sumarIVA(precio) {
+    let precioConIva = precio * 1.21;
     return (precioConIva);
 }
 
@@ -19,15 +19,15 @@ do {
     elegirProducto = prompt("Elegi tu producto: \n Pantalon 8000$ \n Camisa 9500$ \n Zapatillas 24000$ \n Salir para finalizar")
 
     if (elegirProducto == "Pantalon") {
-        alert("Elegiste Pantalon 8000$ tu total es: " + pantalon + "+" + calcularIVA(pantalon) + " IVA");
+        alert("Elegiste Pantalon 8000$ tu total es: " + sumarIVA(pantalon) + " con IVA");
     }
 
     if (elegirProducto == "Camisa") {
-        alert("Elegiste Camisa 9500$ tu total es: " + camisa + "+" + calcularIVA(camisa) + " IVA");
+        alert("Elegiste Camisa 9500$ tu total es: " + sumarIVA(camisa) + " con IVA");
     }
 
     if (elegirProducto == "Zapatillas") {
-        alert("Elegiste Zapatillas 24000$ tu total es: " + zapatillas + "+" + calcularIVA(zapatillas) + " IVA");
+        alert("Elegiste Zapatillas 24000$ tu total es: " + sumarIVA(zapatillas) + " con IVA");
     }
     else if (elegirProducto !== "Salir") {
         alert("Elegi una opcion valida.");
