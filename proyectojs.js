@@ -30,7 +30,9 @@ do {
         alert("Elegiste Zapatillas 24000$ tu total es: " + sumarIVA(zapatillas) + " con IVA");
     }
     else if (elegirProducto !== "Salir") {
-        alert("Gracias por tu compra.");
+        alert("Elegi una opcion valida.");
     }
-} while (elegirProducto !== "Salir");
+} while (elegirProducto !== "Salir") {
+    alert("Te esperamos pronto!")
+}
 
