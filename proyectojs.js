@@ -4,10 +4,12 @@ if (nombreUsuario == "") {
 } else {
     alert("Bienvenido a tu tienda online " + nombreUsuario);
 }
+let productos = [
+    {nombre: "Pantalon", precio: 8000},
+    {nombre: "Camisa", precio: 9500},
+    {nombre: "Zapatillas", precio: 24000}
+];
 
-let pantalon = 8000;
-let camisa = 9500;
-let zapatillas = 24000;
 
 function sumarIVA(precio) {
     let precioConIva = precio * 1.21;
