@@ -1,26 +1,36 @@
-
 //Guardar nombre del usuario y tomar el titulo por ID
 const tittle = document.getElementById('titulo');
 let userName = localStorage.getItem('userName');
+
 //input-------------------------------------------------
 const inputUser = document.createElement('input');
 inputUser.type = 'text';
 inputUser.placeholder = 'Ingresa tu nombre de usuario';
 document.body.appendChild(inputUser);
+
 //boton de enviar
 const buttonSend = document.createElement('button');
 buttonSend.textContent = 'Enviar';
 document.body.appendChild(buttonSend);
+
 //Evento del usuario name + el localstorage
-buttonSend.addEventListener('click', function(){
+buttonSend.addEventListener('click', function () {
     const nombreUsuario = inputUser.value;
-    if (!nombreUsuario){
+    if (!nombreUsuario) {
         console.log("Ingresaste un usuario invalido");
     } else {
         localStorage.setItem('nombreUsuario', nombreUsuario);
         tittle.textContent = "Bienvenido a tu tienda online, " + nombreUsuario;
     }
 })
+//Verificar si ya hay un usuario cargado 
+window.addEventListener('DOMContentLoaded', function () {
+    const nombreUsuario = localStorage.getItem('nombreUsuario');
+    if (nombreUsuario) {
+        tittle.textContent = "Bienvenido a tu tienda online, " + nombreUsuario;
+    }
+});
+
 //Objeto productos 
 const products = [
     { nombre: "Pantalon", precio: 8000 },
@@ -30,8 +40,9 @@ const products = [
     { nombre: "Camisa premium", precio: 10500 },
     { nombre: "Zapatillas premium", precio: 26000 }
 ];
+
 //Funcion IVA
-function sumarIVA(precio){
+function sumarIVA(precio) {
     let precioConIva = precio * 1.21;
     return precioConIva;
 }
@@ -40,25 +51,41 @@ function sumarIVA(precio){
 const productsList = document.createElement('ul');
 productsList.id = 'lista-productos';
 
-products.forEach((producto)=>{
-        const li = document.createElement('li');
-        const productName = document.createTextNode(producto.nombre);
-        const productPrice = document.createTextNode(producto.precio + "$");
-        li.appendChild(productName);
-        li.appendChild(document.createTextNode(' '));
-        li.appendChild(productPrice);
-        productsList.appendChild(li);
-    })
-    document.body.appendChild(productsList)
-const listaItems = productsList.getElementsByTagName('li');
-//Compra
-for (let i = 0; i < listaItems.length; i++) {
-    listaItems[i].addEventListener('click', function () {
-        const productoSeleccionado = products[i];
+products.forEach((producto) => {
+    const li = document.createElement('li');
+    const productName = document.createTextNode(producto.nombre);
+    const productPrice = document.createTextNode(producto.precio + "$");
+    li.appendChild(productName);
+    li.appendChild(document.createTextNode(' '));
+    li.appendChild(productPrice);
+    productsList.appendChild(li);
+
+    // Agregar evento click al elemento de la lista
+    li.addEventListener('click', function () {
+        const productoSeleccionado = products[Array.from(productsList.children).indexOf(li)];
         const totalConIVA = sumarIVA(productoSeleccionado.precio);
-        
+
         // Almacenar los datos de la compra en localStorage
         localStorage.setItem('productoSeleccionado', JSON.stringify(productoSeleccionado));
         localStorage.setItem('totalConIVA', totalConIVA);
+
+        // Obtener el contenedor donde mostrar los productos
+        const productosContainer = document.getElementById('productos-container');
+
+        // Crear elementos HTML para mostrar la información del producto
+        const precioProducto = document.createElement('h2');
+        const nombreProducto = document.createElement('h2');
+        nombreProducto.textContent = 'Producto: ' + productoSeleccionado.nombre;
+        precioProducto.textContent = 'Precio con IVA: ' + totalConIVA;
+
+        // Limpiar el contenedor antes de agregar los nuevos elementos
+        // productosContainer.innerHTML = '';
+
+        // Agregar los elementos al contenedor
+        productosContainer.appendChild(nombreProducto);
+        productosContainer.appendChild(precioProducto);
     });
-}
+});
+
+document.body.appendChild(productsList);
+const listaItems = productsList.getElementsByTagName('li');
