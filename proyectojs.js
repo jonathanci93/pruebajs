@@ -1,3 +1,22 @@
+//------------------Sweet Alert con timeOut asincronico
+setTimeout(() => {
+    Swal.fire({
+        title: '¡No te olvides de nuestros martes y jueves de descuentos en efectivo o transferencia!',
+        imageUrl: './img/oferta.png',
+        imageWidth: 350,
+        imageHeight: 200,
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire('¡Bienvenido ya puedes seguir comprando!')
+        }
+    })
+}, 2000);
 //Guardar nombre del usuario y tomar el titulo por ID
 const tittle = document.getElementById('titulo');
 let userName = localStorage.getItem('userName');
@@ -41,7 +60,9 @@ const products = [
     { nombre: "Zapatillas premium", precio: 26000 }
 ];
 
+
 //Funcion IVA
+
 function sumarIVA(precio) {
     let precioConIva = precio * 1.21;
     return precioConIva;
@@ -89,3 +110,42 @@ products.forEach((producto) => {
 
 document.body.appendChild(productsList);
 const listaItems = productsList.getElementsByTagName('li');
+
+//Crear las ofertas en el HTML desde el JSON local y promesa 
+document.getElementById('ofertBtn').addEventListener('click', cargarOFERTAS)
+function cargarOFERTAS() {
+    fetch('products.json')
+        .then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+            let html = '';
+            data.forEach(function (oferta) {
+                html += `
+            <li>${oferta.nombre} ${oferta.precio + "$"}</li>
+            `
+            })
+            document.getElementById('imprimir').innerHTML = html;
+            //Agregar el mismo evento que los productos
+            document.getElementById('imprimir').addEventListener('click', function (event) {
+                const li = event.target;
+                const ofertaSeleccionada = data[Array.from(li.parentNode.children).indexOf(li)];
+                const totalConIVA = sumarIVA(ofertaSeleccionada.precio);
+
+                localStorage.setItem('productoSeleccionado', JSON.stringify(ofertaSeleccionada));
+                localStorage.setItem('totalConIVA', totalConIVA);
+
+                const productosContainer = document.getElementById('productos-container');
+                const precioProducto = document.createElement('h2');
+                const nombreProducto = document.createElement('h2');
+                nombreProducto.textContent = 'Producto: ' + ofertaSeleccionada.nombre;
+                precioProducto.textContent = 'Precio con IVA: ' + totalConIVA;
+
+                productosContainer.innerHTML = '';
+                productosContainer.appendChild(nombreProducto);
+                productosContainer.appendChild(precioProducto);
+            });
+
+        })
+
+}
