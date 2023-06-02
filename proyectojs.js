@@ -100,7 +100,7 @@ products.forEach((producto) => {
         precioProducto.textContent = 'Precio con IVA: ' + totalConIVA;
 
         // Limpiar el contenedor antes de agregar los nuevos elementos
-        // productosContainer.innerHTML = '';
+        productosContainer.innerHTML = '';
 
         // Agregar los elementos al contenedor
         productosContainer.appendChild(nombreProducto);
