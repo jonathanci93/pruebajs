@@ -145,7 +145,5 @@ function cargarOFERTAS() {
                 productosContainer.appendChild(nombreProducto);
                 productosContainer.appendChild(precioProducto);
             });
-
         })
-
 }
