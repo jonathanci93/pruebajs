@@ -127,8 +127,8 @@ function cargarOFERTAS() {
             })
             document.getElementById('imprimir').innerHTML = html;
             //Agregar el mismo evento que los productos
-            document.getElementById('imprimir').addEventListener('click', function (event) {
-                const li = event.target;
+            document.getElementById('imprimir').addEventListener('click', function (mostrar) {
+                const li = mostrar.target;
                 const ofertaSeleccionada = data[Array.from(li.parentNode.children).indexOf(li)];
                 const totalConIVA = sumarIVA(ofertaSeleccionada.precio);
 
